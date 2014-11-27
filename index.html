@@ -23,7 +23,7 @@
     
     <div class="container" >
    
-    <button type="button" class="btn btn-warning btn-lg" style="margin: 10px;" data-toggle="modal" data-target="#myModal" >Add Market Launch</button>
+    <button type="button" id="add_to_market"class="btn btn-warning btn-lg" style="margin: 10px;" data-toggle="modal" data-target="#myModal" >Add Market Launch</button>
     
 
       <!-- Modal -->
@@ -103,12 +103,12 @@
             <table class="table table-bordered table-hover " id="main">
             <thead>
            <tr>  
-            <td>ID</td>
-            <td>Title</td>
-            <td>Launch TimeFrame</td>
-            <td>Est. SAles Potential(USD)</td>
-            <td>Est. Sales Potential(CHF)</td>
-            <td>Status</td>
+            <td>ID  <a href="#" class="pull-right sortBtn"  sort-criteria="id" ><span class = "glyphicon glyphicon-sort"></span></a>  </td>
+            <td>Title <a href="#" sort-criteria="title" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
+            <td>Launch TimeFrame <a href="#" sort-criteria="tf_year" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
+            <td>Est. SAles Potential(USD)  <a href="#" sort-criteria="amount" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
+            <td>Est. Sales Potential(CHF) <a href="#" sort-criteria="amount" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
+            <td>Status <a href="#" sort-criteria="wconf" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
             <td>Actions</td>
            </tr>
       </thead>
@@ -136,11 +136,11 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/mustache.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.storage.js"></script>
-    <script src="js/validator.js"></script>
+    <script src="js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/mustache.js"></script>
+    <script src="js/libs/jquery-ui.min.js"></script>
+    <script src="js/libs/jquery.storage.js"></script>
+    <script src="js/libs/validator.js"></script>
     
     <script src="js/script.js"></script>
 
@@ -159,8 +159,8 @@
      <td>  {{chf}}</td>
      <td> {{wconf}}</td>
      <td align = "center">  
-          <a href="#" title="update" onclick="updateRow({{id}})"><span class="glyphicon glyphicon-pencil "  ></span></a>
-          <a href="#" title="delete" onclick = "deleteRow({{id}})"><span class="glyphicon glyphicon-remove " style="color:red;"></span></a>
+          <a href="#" title="update" onclick="updateRow({{index}})"><span class="glyphicon glyphicon-pencil "  ></span></a>
+          <a href="#" title="delete" onclick = "deleteRow({{index}})"><span class="glyphicon glyphicon-remove " style="color:red;"></span></a>
 
      </td>
  </tr>

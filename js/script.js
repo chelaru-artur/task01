@@ -1,54 +1,98 @@
 
 var rows = [];
 
-$( document ).ready(function() {
+$(document).ready(function() {
+
+   renderAll();
+
+	$("#add_to_market").on('click', function(){
+		//clear all fields 
+			 $("#title").val("");
+			 $("#brand").val("");
+			 $("#amount").val("");
+			 $("#tf_q :selected").removeAttr("selected");
+			 $("#tf_year :selected").removeAttr("selected");
+			 $("#wconf :selected").removeAttr("selected");
 
 
-
-renderAll();
-
- 
+	});
 
 
-$("#save_btn").click(function(  ){
-       
+	$("#save_btn").on('click', function(){
+	       
+				
+		 var valid = true;
+		   valid = valid && checkLength( $("#title"), "title", 3, 16 );
+		   valid = valid  && checkLength($("#amount"),"amount",1,100) && checkIfNumber($("#amount"));
+
+		if (valid) {
+
+			    var current_id = $("#myModal").find("#add_form").attr("row-id");
+		    var row = {
+
+		        	 id    : parseInt(current_id),  // $.attr() returns string
+		    		 title : $("#title").val(),
+					 brand   : $("#brand").val(),
+					 amount : parseFloat($("#amount").val()),
+					 tf_q : $("#tf_q").val(),
+					 tf_year : $("#tf_year").val(),
+					wconf : $("#wconf").val()
+
+		    };
+
+		    
+		    
+	  		$("#add_form").attr("row-id","");
+	     	var id = $("#add_form").attr("row-index");
+	    	$("#add_form").removeAttr("row-index");
+	   		addRow(row, id);	    
+	    	renderAll();
+	    $('#myModal').modal('hide'); 
+
+	    };	    
+			}); 	 
+
+
+	$('.sortBtn').on('click', function(){   // sort action 
+
+        var currentCriteria = $('#main').attr('sort-criteria');	
+		var criteria = $(this).attr('sort-criteria');   //get by what property to sort data
+		
+		$('#main').attr('sort-criteria', criteria); // add criteria to table 
+
+			var asc = 'ascending' ;
+			var desc = 'descending' ;
+			var direction =  $('#main').attr('sort-direction');
+
 			
- var valid = true;
-   valid = valid && checkLength( $("#title"), "title", 3, 16 );
-   valid = valid  && checkIfNumber($("#amount")) ;     //checkLength($("#amount"),"amount",1,100)
+		    if (   (currentCriteria != criteria )     ) {   // if there was sort action with other criteria (for make first sort in ascending)
+		    			
+		    		
+		    			direction = null;
 
-if (valid) {
+		    	}
 
-    var row = {
+		    	
+		    		 
+		 		if (direction)    // choose what direction to ad in dependence of it was a sort action before or not
+		 		   	{
 
-        
-    		 title : $("#title").val(),
-			 brand   : $("#brand").val(),
-			 amount : parseFloat($("#amount").val()),
-			 tf_q : $("#tf_q").val(),
-			 tf_year : $("#tf_year").val(),
-			wconf : $("#wconf").val()
+		 		   		if (direction == asc) {
+		 		   		  	$('#main').attr('sort-direction',desc)
+		 		   	}else{
+
+		 		   		$('#main').attr('sort-direction',asc);
+
+		 		   		 }
+
+		 		   	}else{         // if there wasn't any sort action before add by default sor in asscendent
 
 
-    };
-
-  
-  var id = $("#add_form").attr("row-id");
-    $("#add_form").removeAttr("row-id");
-   
-
-   
-
-     addRow(row, id);
-    
-    renderAll();
-    $('#myModal').modal('hide'); 
-
-    };
-    
-		}); 
-
-	  
+		 		   			$('#main').attr('sort-direction', 'ascending')
+		 		   	}
+		 		   	renderAll();
+								
+	});		 
  
 });
 
@@ -61,8 +105,10 @@ function renderAll(){
 	if ( localStorage.getItem("rows") != null) {
 		
 		rows = $.localStorage('rows');
+
 		loadRows();
 		loadTotal();
+
 	}else{
 
 		$.localStorage('rows', rows); // create obj rows in storage if doesn't exist
@@ -78,9 +124,22 @@ function addRow(row, id ){
       rows[id] = row;
 
    }else{
-
+    
 	rows.push(row); 
-}
+	id = rows.length - 1; // last element
+
+
+	if (rows.length == 1) {
+         rows[id].id = 1;
+         
+	 }
+	 	else{
+
+	 		var newid = rows[id - 1].id + 1  // increment id of previous element
+	 		rows[id].id = newid // add new id to last element
+
+	 } ;
+}  
 	$.localStorage('rows', rows);
 
 
@@ -89,6 +148,7 @@ function addRow(row, id ){
 
 function updateRow(id){
 	$('#myModal').modal('show'); 
+
 
 var row = rows[id];
 
@@ -99,7 +159,11 @@ var row = rows[id];
 	  $("#tf_year").val(row.tf_year);
 	  $("#wconf").val(row.wconf);
 
-	  $("#add_form").attr("row-id" , id);
+	  $("#add_form").attr("row-index" , id);
+
+	  $("#add_form").attr("row-id",row.id)
+
+	  
 
 }
 
@@ -109,10 +173,11 @@ function deleteRow(id){
 			modal: true,
 			buttons: {
 				"OK" : function(){
-					rows.pop(id);
+					
+					rows.splice(id,1);
 					$.localStorage('rows', rows);
 					$( this ).dialog( "close" );
-					loadRows();
+					renderAll();
 
 				},
 				"Cancel" : function(){
@@ -130,24 +195,44 @@ function deleteRow(id){
 function loadRows() {
 
  
+
  var data = { "rows" : rows ,
 
  			"chf" : function (){
  				return   this.amount +(this.amount * 0.1);
+					},
 
-
- 			},
-
- 			"id" : function(){
-
- 				return rows.indexOf(this);
- 			} 
+ 			"index" : function(){
+ 							
+ 						return rows.indexOf(this);
+ 					}	
+ 			
 	};
+
+     var  criteria =  $('#main').attr('sort-criteria');
+     var  direction = $('#main').attr('sort-direction');
+
+if (criteria && direction) {
+
+	 if( !parseInt(rows[0][criteria])){
+
+	 	data.rows = rows.sort(sortAlphabetical(criteria,direction));
+	 }
+	 else{
+
+		data.rows = rows.sort(sortNumeric(criteria,direction));
+		}
+	}
+    
+
+	
 
   var template = $('#row_template').html();
   Mustache.parse(template);   // optional, speeds up future uses
   var rendered = Mustache.render(template, data );
   $('tbody').html(rendered);
+
+  
 
 }
 
@@ -223,5 +308,37 @@ for (var i = 0; i < rows.length ; i++) {
     	}else{
     		return true;
     	}
+    }
+
+
+    function sortAlphabetical(criteria, direction) {
+    	if (direction == 'ascending') {
+    			return	function(a,b){
+    				
+    				return a[criteria]<b[criteria]
+    			};
+    		}
+    		else if (direction == 'descending') { 
+    			return function(a,b){
+    				return b[criteria]<a[criteria]
+    			};	
+    }
+}
+
+    function sortNumeric(criteria ,direction){
+
+      
+    		if (direction == 'ascending') {
+    			return	function(a,b){
+    				
+    				return a[criteria]-b[criteria]
+    			};
+    		}
+    		else if (direction == 'descending') { // choos else if instead of else in case direction is different of ascending and descending
+    			return function(a,b){
+    				return b[criteria]-a[criteria]
+    			};	
+    		}    
+
     }
 
