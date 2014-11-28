@@ -25,6 +25,8 @@ $(document).ready(function() {
 		   valid = valid && checkLength( $("#title"), "title", 3, 16 );
 		   valid = valid  && checkLength($("#amount"),"amount",1,100) && checkIfNumber($("#amount"));
 
+		  
+
 		if (valid) {
 
 			    var current_id = $("#myModal").find("#add_form").attr("row-id");
@@ -36,7 +38,8 @@ $(document).ready(function() {
 					 amount : parseFloat($("#amount").val()),
 					 tf_q : $("#tf_q").val(),
 					 tf_year : $("#tf_year").val(),
-					wconf : $("#wconf").val()
+					 wconf : $("#wconf").val(),
+					 
 
 		    };
 
@@ -161,7 +164,7 @@ var row = rows[id];
 
 	  $("#add_form").attr("row-index" , id);
 
-	  $("#add_form").attr("row-id",row.id)
+	  $("#add_form").attr("row-id",row.id);
 
 	  
 
@@ -212,19 +215,21 @@ function loadRows() {
      var  criteria =  $('#main').attr('sort-criteria');
      var  direction = $('#main').attr('sort-direction');
 
-if (criteria && direction) {
+if(data.rows.length > 0 ) {
 
-	 if( !parseInt(rows[0][criteria])){
+	if (criteria && direction) {
 
-	 	data.rows = rows.sort(sortAlphabetical(criteria,direction));
-	 }
-	 else{
+		 if( !parseInt(rows[0][criteria])){
 
-		data.rows = rows.sort(sortNumeric(criteria,direction));
+		 	data.rows = rows.sort(sortAlphabetical(criteria,direction));
+		 }
+		 else{
+
+			data.rows = rows.sort(sortNumeric(criteria,direction));
+			}
 		}
-	}
     
-
+}
 	
 
   var template = $('#row_template').html();
