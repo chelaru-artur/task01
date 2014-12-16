@@ -1,188 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Market Launch</title>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Utf-8">
+<link type="text/css" rel="stylesheet" href="mapaCSS/style.css"/>
+<link type="text/css" rel="stylesheet" href="mapaCSS/jquery-ui.min.css"/>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Other styles -->
-    <link href="css/jquery-ui.min.css" rel="stylesheet">
+<title>1st Desk</title>
+</head>
+<body>
+    <input type="button" id ="btn1" value="ADD Market Launch">
+<body>
+ <style>
+body { font-size: 82.5%; }
+label, input { display:block; }
+input.text { margin-bottom:12px; width:95%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+h1 { font-size: 1.2em; margin: .6em 0; }
+div#users-contain { width: 350px; margin: 20px 0; }
+div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+.ui-dialog .ui-state-error { padding: .3em; }
+</style>
+</head>
+<body>
+<div id="dialog-forma"   style="display:none">
+<form id="dialog-form" title="Market Launch">
+<fieldset>
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" value=""  type="text" required/>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body >
-    
-    <div class="container" >
-   
-    <button type="button" id="add_to_market"class="btn btn-warning btn-lg" style="margin: 10px;" data-toggle="modal" data-target="#myModal" >Add Market Launch</button>
-    
+          <label for="brand">Brand</label>
+          <input type="text" name="brand" id="brand" value="" required/>
 
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color: #903;">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <h4 class="modal-title" id="myModalLabel">Market Launch </h4>
-            </div>
-            <div class="modal-body">
-                 
-                 <form id= "add_form" class="form-horizontal" role="form" >
+            <label for="salesAmount">Estimated Sales Ammount</label>
+            <input type="number" name="salesAmount" id="salesAmount" value="" required/>
 
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label" for ="title">Title:</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control"  id="title" data-validate-lengthRange="6" required="required" >
-                        </div>
-                      </div>
+           <label for="launchTime">Launch Timeframe
 
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Brand:</label>
-                        <div class="col-sm-10">
-                          <input type="input" class="form-control" id="brand" placeholder="">
-                        </div>
-                      </div>
+          <select id="launchTime">
+                  <option>Q1</option>
+                  <option>Q2</option>
+          </select>
 
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Estimated Sales Amount:</label>
-                        <div class="col-sm-10">
-                          <input type="number" class="form-control" id="amount" placeholder="">
-                        </div>
-                      </div>
+          <select id="selectYear">
+                  <option>2011</option>
+                  <option>2012</option>
+                  <option>2013</option>
+                  <option>2014</option>
+          </select></label>
 
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Launch Timeframe:</label>
-                        <div class="col-sm-10">
-                            <select class=" form-control input-lg "  id='tf_q' >
-                            <option>Q1</option>
-                            <option>Q2</option>
-                          </select>
+<label for="confidential">Win Confidential</label>
+<select id="confidential">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+</fieldset>
+</form>
+</div>
+<div id="users-contain" class="ui-widget">
 
-                          <select class="  form-control input-lg"  id='tf_year'  >
-                            <option>2011</option>
-                            <option>2012</option>
-                            <option>2013</option>
-                            <option>2014</option>
-                        </select>
-
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Win confidential</label>
-                        <div class="col-sm-10">
-                          <select class="form-control input-lg" id='wconf'> 
-                            <option> Low</option>
-                            <option>Hight</option>
-                          </select>
-                        </div>
-                      </div>
-                     
-                  </form>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" id="save_btn"  class="btn btn-primary">Save </button>
-                
-            </div>
-          </div>
-        </div>
-      </div>
- <!-- table -->
-        <div class="row "  >
-            <table class="table table-bordered table-hover " id="main">
-            <thead>
-           <tr>  
-            <td>ID  <a href="#" class="pull-right sortBtn"  sort-criteria="id" ><span class = "glyphicon glyphicon-sort"></span></a>  </td>
-            <td>Title <a href="#" sort-criteria="title" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
-            <td>Launch TimeFrame <a href="#" sort-criteria="tf_year" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
-            <td>Est. SAles Potential(USD)  <a href="#" sort-criteria="amount" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
-            <td>Est. Sales Potential(CHF) <a href="#" sort-criteria="amount" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
-            <td>Status <a href="#" sort-criteria="wconf" class="pull-right sortBtn"><span class = "glyphicon glyphicon-sort"></span></a></td>
-            <td>Actions</td>
-           </tr>
-      </thead>
-      <tbody>
-        
+<table id="showData" style="broder:1px solid">
+<thead id = "table">
+          <tr class="ui-widget-header ">
+              <th criteria="id">ID   <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span></a>
+                                     <a href="#" style = "float: right"  class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span></a>
+              </th>
+              <th criteria="title">Title  <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                          <a href="#" style = "float: right"  class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span>
+              </th>
+              <th criteria="brand">Brand   <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                           <a href="#" style = "float: right"  class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span>
+              </th>
+              <th criteria="selectYear">Launch Timeframe  <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                                          <a href="#" style = "float: right"  class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span>
+              </th>
+              <th criteria="amount">Est. Sales Potential (USD)  <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                                                <a href="#" style = "float: right" class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span>
+              </th>
+              <th criteria="chf">Est. Sales Potential (CHF) <a href="#" style = "float: right"  class="asc"><span class="ui-icon ui-icon-arrowthick-1-n"></span>
+                                                            <a href="#" style = "float: right" class="desc"><span class="ui-icon ui-icon-arrowthick-1-s"></span>
+              </th>
+              <th>Status</th>
+              <th>Actions</th>
+          </tr>
+</thead>
+        <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
       </tbody>
-          
+</table>
+</div>
+<div id="totals"></div>
 
 
-      </table>
-
-        <div class="row" id = "totals" >
-                  
-                  
-
-              </div>
-      </div>
-      
-     
-    </div>
-
-
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/libs/bootstrap.min.js"></script>
-    <script src="js/libs/mustache.js"></script>
-    <script src="js/libs/jquery-ui.min.js"></script>
-    <script src="js/libs/jquery.storage.js"></script>
-    <script src="js/libs/validator.js"></script>
-    
-    <script src="js/script.js"></script>
-
-
-
-    <!-- templates -->
 
     <script id="row_template" type="x-tmpl-mustache">
- 
  {{#rows}}
  <tr>
-     <td>  {{id}}</td>
-     <td> {{title}} </td>
-     <td>{{tf_q}} {{tf_year}}</td>
+     <td>ML{{id}}</td>
+     <td>{{title}} </td>
+     <td>{{brand}}</td>
+     <td>{{launchtime}} {{selectYear}}</td>
      <td>{{amount}}</td>
-     <td>  {{chf}}</td>
-     <td> {{wconf}}</td>
-     <td align = "center">  
-          <a href="#" title="update" onclick="updateRow({{index}})"><span class="glyphicon glyphicon-pencil "  ></span></a>
-          <a href="#" title="delete" onclick = "deleteRow({{index}})"><span class="glyphicon glyphicon-remove " style="color:red;"></span></a>
-
-     </td>
+     <td>{{chf}}</td>
+     <td>To Be Launched</td>
+     <td> <a href="#" style="float: left;" title="update" onclick="updateRow({{index}})" ><span class="ui-icon ui-icon-pencil"  ></span></a>
+          <a href="#" style="float: left;" title="delete" onclick="deleteRow({{index}})"><span class="ui-icon ui-icon-trash" ></span></a> </td>  
+         
  </tr>
  {{/rows}}
-   
+  </script>
 
-
-</script>
+ <div id="dialog-confirm" title="delete" style="display:none;">
+  <p>Are you sure you want to Delete ?</p>
+</div>
 
 <script id = "totals_template"  type="x-tmpl-mustache">
-
-                <div class="row col-md-6 col-md-offset-6 ">  <div  class="col-md-8 text-right">  #Of market launches: </div>   <div class ="col-md-4">{{num}}</div> </div>
-                 <div class="row col-md-6 col-md-offset-6">  <div  class="col-md-8 text-right">Regional Total Amount of Estimated Sales Potential:    </div>  <div  class="col-md-4">     {{totalUSD}} USD                      </div></div>
-               <div class="row col-md-6 col-md-offset-6">  <div  class="col-md-8 text-right">Global Total Amount Of estimated Sales Potential:  </div>   <div  class="col-md-4">    {{totalCHF}}  CHF                     </div> </div>
-             
-
-</script>
-
-<!-- templates end -->
-  </body>
-
-  <div id="dialog-confirm" title="Empty the recycle bin?" style="display:none;">
-  <p>Are you sure you want to delete this Market Launch drom the Brief?</p>
+        <div>#Of market launches:<strong>{{num}}</strong></div> 
+        <div>Regional Total Amount of Estimated Sales Potential:<strong>{{totalUSD}}</strong>USD</div>  
+        <div>Global Total Amount of Estimated Sales Potential:<strong>{{totalCHF}}</strong>CHF</div>   
+</script>        
 </div>
+  <script src="js/libs/jquery-1.11.1.min.js"></script>
+  <script src="js/libs/jquery-ui.min.js"></script>
+  <script src="js/libs/mustache.js"></script>
+  <script src="js/libs/jquery.validate.js"></script>
+  <script src="js/exbuton.js"></script>
+<script>
+$("#dialog-form").validate({
+  rules: {
+    title: {
+      required: true,
+      minlength: 3
+    },
+  salesAmount: {
+      required: true,
+      number: true
+    }
+  }
+});
+</script>
+  
+</body>
 </html>
